@@ -1,5 +1,6 @@
 import { Empresa } from "src/empresa/entities/empresa.entity";
-import { PrimaryGeneratedColumn, Column, Entity, ManyToOne } from "typeorm";
+import { Produto } from "src/produtos/entities/produto.entity";
+import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, JoinColumn } from "typeorm";
 
 @Entity("arquivo")
 export class Arquivo {
@@ -16,6 +17,10 @@ export class Arquivo {
     tamanho:number
 
     @ManyToOne(() => Empresa, (empresa) => empresa.arquivos, {onDelete:"CASCADE"})
+    @JoinColumn({ name: "id_empresa" })
     empresa:Empresa
 
+    @ManyToOne(() => Produto, (produto) => produto.arquivo, {onDelete:"CASCADE"})
+    @JoinColumn({ name: "id_img" })
+    produto:Produto
 }

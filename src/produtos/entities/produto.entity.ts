@@ -1,8 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany } from "typeorm";
 import { Empresa } from "src/empresa/entities/empresa.entity";
+import { Arquivo } from "src/arquivos/entities/arquivo.entity";
+import { Tamanho } from "src/tamanhos/entities/tamanho.entity";
+import { Categoria } from "src/categorias/entities/categoria.entity";
+import { Venda } from "src/vendas/entities/venda.entity";
 
 @Entity("produtos") 
 export class Produto {
+
   @PrimaryGeneratedColumn({ name: "id_produto" })
   id: number;
 
@@ -22,9 +27,17 @@ export class Produto {
   @Column({ type: "int", nullable: false })
   estoque: number;
 
-  @Column({ type: "int", nullable: false })
-  id_img: number;
+  @OneToOne(() => Arquivo, (arquivo) => arquivo.produto, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "id_img" })
+  arquivo: Arquivo;
 
-  @Column({ type: "int", nullable: false })
-  id_categoria: number;
+  @ManyToOne(() => Categoria, (categoria) => categoria.produto, {onDelete:"CASCADE"})
+  @JoinColumn({ name: "id_categoria" })
+  categoria: Categoria;
+
+  @OneToOne(() => Tamanho, (tamanho) => tamanho.produto)
+  tamanhos:Tamanho[]
+
+  @OneToMany(() => Venda, (venda) => venda.produto)
+  venda:Venda[]
 }

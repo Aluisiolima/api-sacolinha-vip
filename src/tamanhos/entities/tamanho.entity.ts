@@ -1,5 +1,6 @@
 import { Produto } from "src/produtos/entities/produto.entity"
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Venda } from "src/vendas/entities/venda.entity"
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity("tamanhos")
 export class Tamanho {
@@ -13,4 +14,7 @@ export class Tamanho {
 
     @Column({type:"varchar", length:5, nullable:false})
     tamanho:string
+
+    @OneToMany(() => Venda, (venda) => venda.tamanho)
+    venda:Venda[]
 }

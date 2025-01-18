@@ -1,5 +1,6 @@
 import { Empresa } from "src/empresa/entities/empresa.entity"
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Venda } from "src/vendas/entities/venda.entity"
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity("pedidos")
 export class Pedido {
@@ -19,7 +20,10 @@ export class Pedido {
     @Column({type:"varchar", length:20, nullable:false})
     status:string
 
-    @ManyToOne(() => Empresa, (empresa) => empresa.pedido, {onDelete:"CASCADE"})
+    @ManyToOne(() => Empresa, (empresa) => empresa.pedidos, {onDelete:"CASCADE"})
     @JoinColumn({name:"id_empresa"})
     empresa:Empresa
+
+    @OneToMany(() => Venda, (venda) => venda.pedido)
+    venda:Venda[]
 }
