@@ -20,10 +20,10 @@ export class Empresa {
   @Column({ type: "varchar", length: 20, nullable: true, default: null })
   whatsapp: string | null;
 
-  @Column({ type: "varchar", length: 255, nullable: true, default: null })
+  @Column({ type: "varchar", length: 100, nullable: true, default: null })
   facebook: string | null;
 
-  @Column({ type: "varchar", length: 255, nullable: true, default: null })
+  @Column({ type: "varchar", length: 100, nullable: true, default: null })
   instagram: string | null;
 
   @OneToOne(() => Usuario, {nullable:true})

@@ -17,5 +17,5 @@ export class Usuario {
 
     @ManyToOne(() => Empresa, (empresa) => empresa.usuarios, {onDelete:"CASCADE"})
     @JoinColumn({ name:"id_empresa"} )
-    empresa:Empresa
+    empresa:Empresa[]
 }

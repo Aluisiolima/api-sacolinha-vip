@@ -11,7 +11,7 @@ export class Produto {
   @PrimaryGeneratedColumn({ name: "id_produto" })
   id: number;
 
-  @Column({ type: "varchar", length: 200, nullable: false })
+  @Column({ type: "varchar", length: 100, nullable: false })
   nome: string;
 
   @Column({ type: "decimal", precision: 10, scale: 2, nullable: false })
