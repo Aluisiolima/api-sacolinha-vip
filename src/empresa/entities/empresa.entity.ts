@@ -13,8 +13,8 @@ export class Empresa {
   @Column({ type: "varchar", length: 50, nullable: false })
   nome: string;
 
-  @OneToOne(() => Arquivo, {nullable:true})
-  @JoinColumn({ name:"id_img" })
+  @OneToOne(() => Arquivo, { nullable: true })
+  @JoinColumn({ name: "id_img" })
   id_img: Arquivo | null;
 
   @Column({ type: "varchar", length: 20, nullable: true, default: null })
@@ -26,22 +26,22 @@ export class Empresa {
   @Column({ type: "varchar", length: 100, nullable: true, default: null })
   instagram: string | null;
 
-  @OneToOne(() => Usuario, {nullable:true})
-  @JoinColumn({ name:"proprietario" })
+  @OneToOne(() => Usuario, { nullable: true })
+  @JoinColumn({ name: "proprietario" })
   proprietario: Usuario | null;
 
   @OneToMany(() => Produto, (produto) => produto.empresa)
-  produtos:Produto[]
+  produtos: Produto[]
 
   @OneToMany(() => Arquivo, (arquivo) => arquivo.empresa)
-  arquivos:Arquivo[]
+  arquivos: Arquivo[]
 
   @OneToMany(() => Pedido, (pedido) => pedido.empresa)
-  pedidos:Pedido[]
+  pedidos: Pedido[]
 
   @OneToMany(() => Usuario, (usuarios) => usuarios.empresa)
-  usuarios:Usuario[]
+  usuarios: Usuario[]
 
   @OneToMany(() => Venda, (venda) => venda.empresa)
-  venda:Venda[]
+  venda: Venda[]
 }

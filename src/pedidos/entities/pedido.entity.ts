@@ -5,25 +5,25 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 @Entity("pedidos")
 export class Pedido {
 
-    @PrimaryGeneratedColumn({name:"id_pedido"})
-    id:number
+    @PrimaryGeneratedColumn({ name: "id_pedido" })
+    id: number
 
-    @Column({name:"nome_cliente", type:"varchar", length:100, nullable:false})
-    nome:string
+    @Column({ name: "nome_cliente", type: "varchar", length: 100, nullable: false })
+    nome: string
 
-    @Column({type:"varchar", length:200, nullable:true})
-    endereco:string | null
+    @Column({ type: "varchar", length: 200, nullable: true })
+    endereco: string | null
 
-    @Column({type:"varchar", length:20, nullable:false})
-    numero_contato:string
+    @Column({ type: "varchar", length: 20, nullable: false })
+    numero_contato: string
 
-    @Column({type:"varchar", length:20, nullable:false})
-    status:string
+    @Column({ type: "varchar", length: 20, nullable: false })
+    status: string
 
-    @ManyToOne(() => Empresa, (empresa) => empresa.pedidos, {onDelete:"CASCADE"})
-    @JoinColumn({name:"id_empresa"})
-    empresa:Empresa
+    @ManyToOne(() => Empresa, (empresa) => empresa.pedidos, { onDelete: "CASCADE" })
+    @JoinColumn({ name: "id_empresa" })
+    empresa: Empresa
 
     @OneToMany(() => Venda, (venda) => venda.pedido)
-    venda:Venda[]
+    venda: Venda[]
 }

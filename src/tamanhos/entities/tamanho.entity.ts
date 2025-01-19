@@ -5,16 +5,16 @@ import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColum
 @Entity("tamanhos")
 export class Tamanho {
 
-    @PrimaryGeneratedColumn({name:"id_tamanho"})
-    id:number
+    @PrimaryGeneratedColumn({ name: "id_tamanho" })
+    id: number
 
     @ManyToOne(() => Produto, (produto) => produto.tamanhos)
-    @JoinColumn({name:"id_produto"})
-    produto:Produto 
+    @JoinColumn({ name: "id_produto" })
+    produto: Produto
 
-    @Column({type:"varchar", length:5, nullable:false})
-    tamanho:string
+    @Column({ type: "varchar", length: 5, nullable: false })
+    tamanho: string
 
     @OneToMany(() => Venda, (venda) => venda.tamanho)
-    venda:Venda[]
+    venda: Venda[]
 }

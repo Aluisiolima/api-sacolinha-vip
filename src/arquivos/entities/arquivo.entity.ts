@@ -4,22 +4,22 @@ import { PrimaryGeneratedColumn, Column, Entity, ManyToOne, JoinColumn, OneToOne
 
 @Entity("arquivos")
 export class Arquivo {
-    @PrimaryGeneratedColumn({ name:"id_arquivo" })
-    id:number
+    @PrimaryGeneratedColumn({ name: "id_arquivo" })
+    id: number
 
-    @Column({type:"varchar", length:20, nullable:false})
-    tipo:string
+    @Column({ type: "varchar", length: 20, nullable: false })
+    tipo: string
 
-    @Column({type:"varchar", length:200, nullable:false})
-    path:string
+    @Column({ type: "varchar", length: 200, nullable: false })
+    path: string
 
-    @Column({type:"int", nullable:false})
-    tamanho:number
+    @Column({ type: "int", nullable: false })
+    tamanho: number
 
-    @ManyToOne(() => Empresa, (empresa) => empresa.arquivos, {onDelete:"CASCADE"})
+    @ManyToOne(() => Empresa, (empresa) => empresa.arquivos, { onDelete: "CASCADE" })
     @JoinColumn({ name: "id_empresa" })
-    empresa:Empresa
+    empresa: Empresa
 
     @OneToOne(() => Produto, (produto) => produto.arquivo)
-    produto:Produto
+    produto: Produto
 }
