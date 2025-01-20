@@ -20,10 +20,10 @@ export class Pedido {
     @Column({ type: "varchar", length: 20, nullable: false })
     status: string
 
-    @ManyToOne(() => Empresa, (empresa) => empresa.pedidos, { onDelete: "CASCADE" })
+    @ManyToOne(() => Empresa, (empresa) => empresa.id_pedido, { onDelete: "CASCADE", nullable:false })
     @JoinColumn({ name: "id_empresa" })
-    empresa: Empresa
+    id_empresa: Empresa
 
-    @OneToMany(() => Venda, (venda) => venda.pedido)
+    @OneToMany(() => Venda, (venda) => venda.id_pedido, {onDelete:"CASCADE", nullable:false})
     venda: Venda[]
 }

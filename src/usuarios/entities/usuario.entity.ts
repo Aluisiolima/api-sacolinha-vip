@@ -15,7 +15,7 @@ export class Usuario {
     @Column({ type: "varchar", length: 20, nullable: false })
     cargo: string
 
-    @ManyToOne(() => Empresa, (empresa) => empresa.usuarios, { onDelete: "CASCADE" })
+    @ManyToOne(() => Empresa, (empresa) => empresa.id_usuario, { onDelete: "CASCADE", nullable:false })
     @JoinColumn({ name: "id_empresa" })
-    empresa: Empresa[]
+    id_empresa: Empresa
 }

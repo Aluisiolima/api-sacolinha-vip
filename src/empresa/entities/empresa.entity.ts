@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, OneToOne, JoinColumn } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, OneToOne, JoinColumn, ManyToOne } from "typeorm";
 import { Produto } from "src/produtos/entities/produto.entity";
 import { Arquivo } from "src/arquivos/entities/arquivo.entity";
 import { Pedido } from "src/pedidos/entities/pedido.entity";
@@ -13,7 +13,10 @@ export class Empresa {
   @Column({ type: "varchar", length: 50, nullable: false })
   nome: string;
 
-  @OneToOne(() => Arquivo, { nullable: true })
+  @Column({ type: "varchar", length: 10, nullable: false, default:"ativa" })
+  status: string;
+
+  @OneToOne(() => Arquivo, {onDelete:"SET NULL", nullable: true })
   @JoinColumn({ name: "id_img" })
   id_img: Arquivo | null;
 
@@ -26,22 +29,22 @@ export class Empresa {
   @Column({ type: "varchar", length: 100, nullable: true, default: null })
   instagram: string | null;
 
-  @OneToOne(() => Usuario, { nullable: true })
+  @OneToOne(() => Usuario, {onDelete:"SET NULL", nullable: true })
   @JoinColumn({ name: "proprietario" })
   proprietario: Usuario | null;
 
-  @OneToMany(() => Produto, (produto) => produto.empresa)
+  @OneToMany(() => Produto, (produto) => produto.id_empresa, { onDelete:"CASCADE", nullable:false})
   produtos: Produto[]
 
-  @OneToMany(() => Arquivo, (arquivo) => arquivo.empresa)
+  @OneToMany(() => Arquivo, (arquivo) => arquivo.id_empresa, { onDelete:"CASCADE", nullable:false})
   arquivos: Arquivo[]
 
-  @OneToMany(() => Pedido, (pedido) => pedido.empresa)
-  pedidos: Pedido[]
+  @OneToMany(() => Pedido, (pedido) => pedido.id_empresa, { onDelete:"CASCADE", nullable:false})
+  id_pedido: Pedido[]
 
-  @OneToMany(() => Usuario, (usuarios) => usuarios.empresa)
-  usuarios: Usuario[]
+  @OneToMany(() => Usuario, (usuario) => usuario.id_empresa, { onDelete:"CASCADE", nullable:false})
+  id_usuario: Usuario[]
 
-  @OneToMany(() => Venda, (venda) => venda.empresa)
-  venda: Venda[]
+  @OneToMany(() => Venda, (venda) => venda.id_empresa, { onDelete:"CASCADE", nullable:false})
+  id_venda: Venda[]
 }

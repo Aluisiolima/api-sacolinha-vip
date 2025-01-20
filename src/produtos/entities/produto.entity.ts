@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToOne, OneToMany } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, Index } from "typeorm";
 import { Empresa } from "src/empresa/entities/empresa.entity";
 import { Arquivo } from "src/arquivos/entities/arquivo.entity";
 import { Tamanho } from "src/tamanhos/entities/tamanho.entity";
@@ -20,24 +20,25 @@ export class Produto {
   @Column({ type: "int", nullable: false, comment: "Deve ser um número entre 0 e 100" })
   desconto: number;
 
-  @ManyToOne(() => Empresa, (empresa) => empresa.produtos, { onDelete: "CASCADE" })
+  @Index()
+  @ManyToOne(() => Empresa, (empresa) => empresa.produtos, { onDelete: "CASCADE" , nullable:false})
   @JoinColumn({ name: "id_empresa" })
-  empresa: Empresa;
+  id_empresa: Empresa;
 
   @Column({ type: "int", nullable: false })
   estoque: number;
 
-  @OneToOne(() => Arquivo, (arquivo) => arquivo.produto, { onDelete: "CASCADE" })
+  @ManyToOne(() => Arquivo, (arquivo) => arquivo.produto, { onDelete: "RESTRICT", nullable:false })
   @JoinColumn({ name: "id_img" })
-  arquivo: Arquivo;
+  id_img: Arquivo;
 
-  @ManyToOne(() => Categoria, (categoria) => categoria.produto, { onDelete: "CASCADE" })
+  @ManyToOne(() => Categoria, (categoria) => categoria.produto, { onDelete: "CASCADE", nullable:false })
   @JoinColumn({ name: "id_categoria" })
-  categoria: Categoria;
+  id_categoria: Categoria;
 
-  @OneToOne(() => Tamanho, (tamanho) => tamanho.produto)
-  tamanhos: Tamanho[]
+  @OneToMany(() => Tamanho, (tamanho) => tamanho.id_produto, { onDelete: "RESTRICT", nullable:false })
+  id_tamanho: Tamanho[]
 
-  @OneToMany(() => Venda, (venda) => venda.produto)
+  @OneToMany(() => Venda, (venda) => venda.id_produto, { onDelete: "RESTRICT", nullable:false })
   venda: Venda[]
 }

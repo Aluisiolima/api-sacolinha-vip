@@ -12,9 +12,9 @@ export class ProdutosController {
     return this.produtosService.create(createProdutoDto);
   }
 
-  @Get("pegarAll")
-  findAll() {
-    return this.produtosService.findAll();
+  @Get("pegarAll/:id")
+  findAll(@Param("id") id: string) {
+    return this.produtosService.findAll(+id);
   }
 
   @Get("pegar/:id")

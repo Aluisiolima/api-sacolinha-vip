@@ -10,6 +10,6 @@ export class Categoria {
     @Column({ type: "varchar", length: 100, nullable: false })
     categoria: string
 
-    @OneToMany(() => Produto, (produto) => produto.categoria)
+    @OneToMany(() => Produto, (produto) => produto.id_categoria, { onDelete:"CASCADE", nullable:false })
     produto: Produto[]
 }
