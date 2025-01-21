@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateProdutoDto } from './dto/create-produto.dto';
@@ -35,21 +35,25 @@ export class ProdutosService {
     });
 
     if(!produto){
-      throw new Error("Nao existe esse Produto!!!");
+      throw new NotFoundException("Nao existe esse Produto!!!");
     }
 
     const ImgExiste = produto.id_img.some((Img) => Img.id == ImgId);
 
     if(ImgExiste){
-      throw new Error("Essa imagem ja esta relacionada com esse Produto!!!");
+      throw new BadRequestException("Essa imagem ja esta relacionada com esse Produto!!!");
     }
 
     const arquivo = await this.arquivoRepository.findOne({
       where: { id : ImgId }
     });
 
-    if (!arquivo || arquivo.tipo !== "imagem") {
-      throw new Error("Essa Img nao exite ou nao esta no formato correto!!")
+    if (!arquivo) {
+      throw new NotFoundException("Essa Img nao exite!!")
+    }
+
+    if (arquivo.tipo !== "imagem"){
+      throw new BadRequestException("Essa Img nao esta no formato correto!!")
     }
 
     produto.id_img.push(arquivo);
