@@ -1,5 +1,4 @@
 import { IsString, IsInt, IsDecimal, IsPositive, Max, Min, IsNotEmpty } from "class-validator"
-import { Arquivo } from "src/arquivos/entities/arquivo.entity";
 import { Categoria } from "src/categorias/entities/categoria.entity";
 import { Empresa } from "src/empresa/entities/empresa.entity";
 
@@ -24,10 +23,7 @@ export class CreateProdutoDto {
     @IsInt()
     @IsPositive()
     estoque: number;
-    
-    @IsInt()
-    @IsPositive()
-    id_img: Arquivo;
+
     
     @IsInt()
     @IsPositive()

@@ -3,6 +3,7 @@ import { ProdutosService } from "./produtos.service";
 import { CreateProdutoDto } from "./dto/create-produto.dto";
 import { UpdateProdutoDto } from "./dto/update-produto.dto";
 
+
 @Controller("produtos")
 export class ProdutosController {
   constructor(private readonly produtosService: ProdutosService) {}
@@ -10,6 +11,11 @@ export class ProdutosController {
   @Post("inserir")
   create(@Body() createProdutoDto: CreateProdutoDto) {
     return this.produtosService.create(createProdutoDto);
+  }
+
+  @Post(":idProduto/add/:idImg/")
+  inserirImg(@Param("idProduto") idProduto:number, @Param("idImg") idImg:number) {
+    return this.produtosService.inserirImg(idProduto, idImg);
   }
 
   @Get("pegarAll/:id")

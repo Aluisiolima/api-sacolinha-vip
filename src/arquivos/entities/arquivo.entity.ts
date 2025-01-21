@@ -1,6 +1,6 @@
 import { Empresa } from "src/empresa/entities/empresa.entity";
 import { Produto } from "src/produtos/entities/produto.entity";
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, JoinColumn } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, JoinColumn, ManyToMany } from "typeorm";
 
 @Entity("arquivos")
 export class Arquivo {
@@ -20,6 +20,6 @@ export class Arquivo {
     @JoinColumn({ name: "id_empresa" })
     id_empresa: Empresa[]
 
-    @OneToMany(() => Produto, (produto) => produto.id_img, { onDelete: "CASCADE", nullable:false })
+    @ManyToMany(() => Produto, (produto) => produto.id_img, { onDelete: "CASCADE", nullable:false })
     produto: Produto[]
 }

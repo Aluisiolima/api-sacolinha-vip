@@ -1,4 +1,4 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, Index } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn, OneToMany, Index, JoinTable, ManyToMany } from "typeorm";
 import { Empresa } from "src/empresa/entities/empresa.entity";
 import { Arquivo } from "src/arquivos/entities/arquivo.entity";
 import { Tamanho } from "src/tamanhos/entities/tamanho.entity";
@@ -28,9 +28,9 @@ export class Produto {
   @Column({ type: "int", nullable: false })
   estoque: number;
 
-  @ManyToOne(() => Arquivo, (arquivo) => arquivo.produto, { onDelete: "RESTRICT", nullable:false })
-  @JoinColumn({ name: "id_img" })
-  id_img: Arquivo;
+  @ManyToMany(() => Arquivo, (arquivo) => arquivo.produto, { onDelete: "RESTRICT", nullable:false })
+  @JoinTable()
+  id_img: Arquivo[];
 
   @ManyToOne(() => Categoria, (categoria) => categoria.produto, { onDelete: "CASCADE", nullable:false })
   @JoinColumn({ name: "id_categoria" })

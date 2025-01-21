@@ -28,7 +28,7 @@ import { Pedido } from "./pedidos/entities/pedido.entity";
       password: "root",
       database: "sacolinha_vip",
       entities: [Arquivo,Categoria,Empresa,Pedido,Produto,Tamanho,Usuario,Venda],
-      synchronize: false,
+      synchronize: true,
     }),
     EmpresaModule,
     PedidosModule,
