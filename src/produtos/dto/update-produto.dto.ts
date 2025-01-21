@@ -1,4 +1,5 @@
 import { IsString, IsInt, IsOptional, IsDecimal, IsPositive, Max, Min } from "class-validator"
+import { Categoria } from "src/categorias/entities/categoria.entity";
 
 export class UpdateProdutoDto {
     @IsString()
@@ -22,11 +23,7 @@ export class UpdateProdutoDto {
     estoque?: number;
   
     @IsInt()
-    @IsOptional()
-    id_img?: number;
-  
-    @IsInt()
     @IsPositive()
     @IsOptional()
-    id_categoria?: number;
+    id_categoria?: Categoria;
 }

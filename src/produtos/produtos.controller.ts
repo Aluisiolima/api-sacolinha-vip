@@ -18,8 +18,8 @@ export class ProdutosController {
     return this.produtosService.inserirImg(idProduto, idImg);
   }
 
-  @Get("pegarAll/:id")
-  findAll(@Param("id") id: string) {
+  @Get("pegarAll/:idEmpresa")
+  findAll(@Param("idEmpresa") id: string) {
     return this.produtosService.findAll(+id);
   }
 

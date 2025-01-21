@@ -60,15 +60,41 @@ export class ProdutosService {
     return await this.produtoRepository.save(produto);
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} produto`;
+  async findOne(id: number): Promise<Produto> {
+    const produto = await this.produtoRepository.findOne({
+      where: { id : id },
+      relations: ["id_img","id_tamanho"],
+    });
+
+    if (!produto) {
+      throw new NotFoundException("Esse produto nao Existe !!")
+    }
+
+    return produto;
   }
 
-  update(id: number, updateProdutoDto: UpdateProdutoDto) {
-    return `This action updates a #${id} produto`;
+  async update(id: number, updateProdutoDto: UpdateProdutoDto): Promise<void>{
+    const produto = await this.produtoRepository.findOne({
+      where: {id:id}
+    });
+
+    if (!produto){
+      throw new NotFoundException("Esse produto nao existe!!");
+    }
+
+    await this.produtoRepository.update(id, updateProdutoDto);
+
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} produto`;
+  async remove(id: number): Promise<void> {
+    const produto = await this.produtoRepository.findOne({
+      where: {id:id}
+    });
+
+    if (!produto){
+      throw new NotFoundException("Esse produto nao existe!!");
+    }
+
+    await this.produtoRepository.remove(produto);
   }
 }
