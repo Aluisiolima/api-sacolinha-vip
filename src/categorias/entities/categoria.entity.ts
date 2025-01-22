@@ -1,15 +1,20 @@
+import { Arquivo } from "src/arquivos/entities/arquivo.entity"
 import { Produto } from "src/produtos/entities/produto.entity"
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm"
 
 @Entity("categorias")
 export class Categoria {
 
-    @PrimaryGeneratedColumn({ name: "id_categoria" })
+    @PrimaryGeneratedColumn()
     id: number
 
     @Column({ type: "varchar", length: 100, nullable: false })
     categoria: string
 
-    @OneToMany(() => Produto, (produto) => produto.id_categoria, { onDelete:"CASCADE", nullable:false })
-    produto: Produto[]
+    @OneToOne(() => Arquivo, (arquivo) => arquivo.categoria, { onDelete: "CASCADE", nullable: false })
+    @JoinColumn({ name: "id_img" })
+    img: Arquivo
+
+    @OneToMany(() => Produto, (produto) => produto.categoria, { onDelete: "CASCADE", nullable: false })
+    produtos: Produto[]
 }

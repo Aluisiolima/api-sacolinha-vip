@@ -3,7 +3,7 @@ import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "t
 
 @Entity("usuarios")
 export class Usuario {
-    @PrimaryGeneratedColumn({ name: "id_usuario" })
+    @PrimaryGeneratedColumn()
     id: number
 
     @Column({ type: "varchar", length: 100, nullable: false })
@@ -15,7 +15,7 @@ export class Usuario {
     @Column({ type: "varchar", length: 20, nullable: false })
     cargo: string
 
-    @ManyToOne(() => Empresa, (empresa) => empresa.id_usuario, { onDelete: "CASCADE", nullable:false })
+    @ManyToOne(() => Empresa, (empresa) => empresa.usuarios, { onDelete: "CASCADE", nullable: false })
     @JoinColumn({ name: "id_empresa" })
-    id_empresa: Empresa
+    empresa: Empresa
 }

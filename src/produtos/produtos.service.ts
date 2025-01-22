@@ -22,7 +22,7 @@ export class ProdutosService {
   async findAll(id_empresa: number) {
     return await this.produtoRepository.find({
       where:{
-        id_empresa : {id : id_empresa}
+        empresa : {id : id_empresa}
       },
       relations: ["id_img","id_tamanho","id_categoria"]
     });
@@ -38,7 +38,7 @@ export class ProdutosService {
       throw new NotFoundException("Nao existe esse Produto!!!");
     }
 
-    const ImgExiste = produto.id_img.some((Img) => Img.id == ImgId);
+    const ImgExiste = produto.arquivos.some((Img) => Img.id == ImgId);
 
     if(ImgExiste){
       throw new BadRequestException("Essa imagem ja esta relacionada com esse Produto!!!");
@@ -56,7 +56,7 @@ export class ProdutosService {
       throw new BadRequestException("Essa Img nao esta no formato correto!!")
     }
 
-    produto.id_img.push(arquivo);
+    produto.arquivos.push(arquivo);
     return await this.produtoRepository.save(produto);
   }
 

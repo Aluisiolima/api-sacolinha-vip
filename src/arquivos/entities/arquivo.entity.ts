@@ -1,10 +1,11 @@
+import { Categoria } from "src/categorias/entities/categoria.entity";
 import { Empresa } from "src/empresa/entities/empresa.entity";
 import { Produto } from "src/produtos/entities/produto.entity";
-import { PrimaryGeneratedColumn, Column, Entity, OneToMany, JoinColumn, ManyToMany } from "typeorm";
+import { PrimaryGeneratedColumn, Column, Entity, OneToMany, JoinColumn, ManyToMany, OneToOne, ManyToOne } from "typeorm";
 
 @Entity("arquivos")
 export class Arquivo {
-    @PrimaryGeneratedColumn({ name: "id_arquivo" })
+    @PrimaryGeneratedColumn()
     id: number
 
     @Column({ type: "varchar", length: 20, nullable: false })
@@ -13,13 +14,14 @@ export class Arquivo {
     @Column({ type: "varchar", length: 200, nullable: false })
     path: string
 
-    @Column({ type: "int", nullable: false })
-    tamanho: number
 
-    @OneToMany(() => Empresa, (empresa) => empresa.arquivos, { onDelete: "CASCADE", nullable:false })
+    @ManyToOne(() => Empresa, (empresa) => empresa.arquivos, { onDelete: "CASCADE", nullable: false })
     @JoinColumn({ name: "id_empresa" })
-    id_empresa: Empresa[]
+    empresa: Empresa
 
-    @ManyToMany(() => Produto, (produto) => produto.id_img, { onDelete: "CASCADE", nullable:false })
-    produto: Produto[]
+    @OneToOne(() => Categoria, (categoria) => categoria.img, { onDelete: "CASCADE", nullable: false })
+    categoria: Categoria
+
+    @ManyToMany(() => Produto, (produto) => produto.arquivos, { onDelete: "CASCADE", nullable: false })
+    produtos: Produto[]
 }
