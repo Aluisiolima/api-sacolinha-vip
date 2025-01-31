@@ -13,9 +13,14 @@ export class ProdutosController {
     return this.produtosService.create(createProdutoDto);
   }
 
-  @Post(":idProduto/add/:idImg/")
+  @Post(":idProduto/addImg/:idImg/")
   inserirImg(@Param("idProduto") idProduto:number, @Param("idImg") idImg:number) {
     return this.produtosService.inserirImg(idProduto, idImg);
+  }
+
+  @Post(":idProduto/addTamanho/:idTamanho/")
+  inserirTamanho(@Param("idProduto") idProduto:number, @Param("idTamanho") idTamanho:number) {
+    return this.produtosService.inserirTamanho(idProduto, idTamanho);
   }
 
   @Get("pegarAll/:idEmpresa")

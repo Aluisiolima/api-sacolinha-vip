@@ -1,26 +1,34 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTamanhoDto } from './dto/create-tamanho.dto';
-import { UpdateTamanhoDto } from './dto/update-tamanho.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Tamanho } from './entities/tamanho.entity';
+import { Repository } from 'typeorm';
+
 
 @Injectable()
 export class TamanhosService {
-  create(createTamanhoDto: CreateTamanhoDto) {
-    return 'This action adds a new tamanho';
+  constructor(
+    @InjectRepository(Tamanho)
+    private tamanhoRepository: Repository<Tamanho>
+  ) { }
+
+  async create(createTamanhoDto: CreateTamanhoDto): Promise<Tamanho> {
+    return await this.tamanhoRepository.save(createTamanhoDto);
   }
 
-  findAll() {
-    return `This action returns all tamanhos`;
+  async findAll(): Promise<Tamanho[]> {
+    return await this.tamanhoRepository.find();
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} tamanho`;
-  }
+  async remove(id: number): Promise<void> {
+    const tamanho = await this.tamanhoRepository.findOne({
+      where: { id: id }
+    });
 
-  update(id: number, updateTamanhoDto: UpdateTamanhoDto) {
-    return `This action updates a #${id} tamanho`;
-  }
+    if (!tamanho) {
+      throw new NotFoundException("Esse tamanho nao existe!!");
+    }
 
-  remove(id: number) {
-    return `This action removes a #${id} tamanho`;
+    await this.tamanhoRepository.remove(tamanho);
   }
 }

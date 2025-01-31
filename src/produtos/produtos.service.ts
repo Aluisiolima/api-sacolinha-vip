@@ -5,6 +5,7 @@ import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 import { Produto } from './entities/produto.entity';
 import { Arquivo } from 'src/arquivos/entities/arquivo.entity';
+import { Tamanho } from 'src/tamanhos/entities/tamanho.entity';
 
 @Injectable()
 export class ProdutosService {
@@ -12,7 +13,9 @@ export class ProdutosService {
     @InjectRepository(Produto)
     private produtoRepository:Repository<Produto>,
     @InjectRepository(Arquivo)
-    private arquivoRepository:Repository<Arquivo>
+    private arquivoRepository:Repository<Arquivo>,
+    @InjectRepository(Tamanho)
+    private tamanhoRepository:Repository<Tamanho>
   ) {}
 
   async create(createProdutoDto: CreateProdutoDto): Promise<Produto> {
@@ -57,6 +60,34 @@ export class ProdutosService {
     }
 
     produto.arquivos.push(arquivo);
+    return await this.produtoRepository.save(produto);
+  }
+
+  async inserirTamanho(ProdutoId:number, tamanhoId:number): Promise<Produto> {
+    const produto = await this.produtoRepository.findOne({
+      where: { id : ProdutoId },
+      relations: ["tamanhos"],
+    });
+
+    if(!produto){
+      throw new NotFoundException("Nao existe esse Produto!!!");
+    }
+
+    const TamanhoExiste = produto.tamanhos.some((tamanho) => tamanho.id == tamanhoId);
+
+    if(TamanhoExiste){
+      throw new BadRequestException("Essa imagem ja esta relacionada com esse Produto!!!");
+    }
+
+    const tamanho = await this.tamanhoRepository.findOne({
+      where: { id : tamanhoId }
+    });
+
+    if (!tamanho) {
+      throw new NotFoundException("Essa Img nao exite!!")
+    }
+
+    produto.tamanhos.push(tamanho);
     return await this.produtoRepository.save(produto);
   }
 
