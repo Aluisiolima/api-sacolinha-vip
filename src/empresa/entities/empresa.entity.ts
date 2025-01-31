@@ -16,7 +16,7 @@ export class Empresa {
   @Column({ type: "varchar", length: 200, nullable: false })
   endereco: string;
 
-  @Column({ type: "varchar", length: 10, nullable: false })
+  @Column({ type: "varchar", length: 10, nullable: false, default:"ativa" })
   status: string;
 
   @OneToOne(() => Arquivo, { onDelete: "SET NULL", nullable: true })

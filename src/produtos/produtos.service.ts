@@ -24,14 +24,14 @@ export class ProdutosService {
       where:{
         empresa : {id : id_empresa}
       },
-      relations: ["id_img","id_tamanho","id_categoria"]
+      relations: ["arquivos","tamanhos","categoria"]
     });
   }
 
   async inserirImg(ProdutoId:number, ImgId:number): Promise<Produto> {
     const produto = await this.produtoRepository.findOne({
       where: { id : ProdutoId },
-      relations: ["id_img"],
+      relations: ["arquivos"],
     });
 
     if(!produto){
@@ -63,7 +63,7 @@ export class ProdutosService {
   async findOne(id: number): Promise<Produto> {
     const produto = await this.produtoRepository.findOne({
       where: { id : id },
-      relations: ["id_img","id_tamanho"],
+      relations: ["arquivos","tamanhos"],
     });
 
     if (!produto) {

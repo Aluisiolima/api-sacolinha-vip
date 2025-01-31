@@ -9,7 +9,7 @@ export class CreateProdutoDto {
     
     @IsDecimal()
     @IsPositive()
-    preco: number;
+    valor: number;
     
     @IsInt()
     @Max(100)
@@ -18,7 +18,7 @@ export class CreateProdutoDto {
 
     @IsInt()
     @IsPositive()
-    id_empresa: Empresa;
+    empresa: Empresa;
     
     @IsInt()
     @IsPositive()
@@ -27,6 +27,6 @@ export class CreateProdutoDto {
     
     @IsInt()
     @IsPositive()
-    id_categoria: Categoria;
+    categoria: Categoria;
 
 }

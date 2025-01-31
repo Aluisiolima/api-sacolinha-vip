@@ -19,17 +19,17 @@ import { Pedido } from "./pedidos/entities/pedido.entity";
 
 @Module({
   imports: [
-    ProdutosModule,
     TypeOrmModule.forRoot({
       type: "mysql",
-      host: "localhost",
-      port: 3306,
-      username: "phpmyadmin",
-      password: "root",
-      database: "sacolinha_vip",
+      host: String(process.env.HOST_DB),
+      port: Number(process.env.PORT_DB),
+      username: String(process.env.USER_DB),
+      password: String(process.env.SENHA_DB),
+      database: String(process.env.DB_NAME),
       entities: [Arquivo,Categoria,Empresa,Pedido,Produto,Tamanho,Usuario,Venda],
       synchronize: false,
     }),
+    ProdutosModule,
     EmpresaModule,
     PedidosModule,
     VendasModule,
