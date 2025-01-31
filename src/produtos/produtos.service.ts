@@ -55,7 +55,7 @@ export class ProdutosService {
       throw new NotFoundException("Essa Img nao exite!!")
     }
 
-    if (arquivo.tipo !== "imagem"){
+    if (!arquivo.tipo.includes("image")){
       throw new BadRequestException("Essa Img nao esta no formato correto!!")
     }
 
