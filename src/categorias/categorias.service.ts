@@ -3,16 +3,12 @@ import { CreateCategoriaDto } from './dto/create-categoria.dto';
 import { Categoria } from './entities/categoria.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Produto } from 'src/produtos/entities/produto.entity';
 
 @Injectable()
 export class CategoriasService {
   constructor(
     @InjectRepository(Categoria)
     private categoriaRepository: Repository<Categoria>,
-
-    @InjectRepository(Produto)
-    private produtoRepository: Repository<Produto>
   ) { }
 
   async create(createCategoriaDto: CreateCategoriaDto): Promise<Categoria> {

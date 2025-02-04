@@ -1,26 +1,26 @@
 import { Injectable } from '@nestjs/common';
 import { CreateVendaDto } from './dto/create-venda.dto';
-import { UpdateVendaDto } from './dto/update-venda.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Venda } from './entities/venda.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class VendasService {
-  create(createVendaDto: CreateVendaDto) {
-    return 'This action adds a new venda';
+  constructor(
+    @InjectRepository(Venda)
+    private vendaRepository: Repository<Venda>
+  ){}
+
+  async create(createVendaDto: CreateVendaDto): Promise<Venda>{
+    return await this.vendaRepository.save(createVendaDto);
   }
 
-  findAll() {
-    return `This action returns all vendas`;
+  async findAll(idEmpresa:number): Promise<Venda[]> {
+    return await this.vendaRepository.find({
+      where: {
+        empresa: { id : idEmpresa }
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} venda`;
-  }
-
-  update(id: number, updateVendaDto: UpdateVendaDto) {
-    return `This action updates a #${id} venda`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} venda`;
-  }
 }
