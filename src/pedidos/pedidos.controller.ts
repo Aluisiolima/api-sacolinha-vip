@@ -11,12 +11,12 @@ export class PedidosController {
     return this.pedidosService.create(createPedidoDto);
   }
 
-  @Get()
-  findAll() {
-    return this.pedidosService.findAll();
+  @Get("pegarAll/:id")
+  findAll(@Param('id') id:number) {
+    return this.pedidosService.findAll(id);
   }
 
-  @Get(':id')
+  @Get('pegar/:id')
   findOne(@Param('id') id: string) {
     return this.pedidosService.findOne(+id);
   }

@@ -8,8 +8,6 @@ interface produto {
     desconto_aplicado: number
     tamanho: string
     quantidade: number
-    pedido: Pedido
-    empresa: Empresa
 }
 
 export class CreatePedidoDto {

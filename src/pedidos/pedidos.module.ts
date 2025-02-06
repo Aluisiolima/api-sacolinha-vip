@@ -6,7 +6,7 @@ import { Pedido } from './entities/pedido.entity';
 import { VendasModule } from 'src/vendas/vendas.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Pedido]), VendasModule],
+  imports: [TypeOrmModule.forFeature([Pedido])],
   controllers: [PedidosController],
   providers: [PedidosService],
 })
