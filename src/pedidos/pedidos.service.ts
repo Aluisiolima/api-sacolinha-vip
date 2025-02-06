@@ -33,16 +33,16 @@ export class PedidosService {
     });
   }
 
-  async findAll(idEmpresa:number): Promise<Pedido[]> {
+  async findAll(idEmpresa: number): Promise<Pedido[]> {
     return await this.pedidoRepository.find({
-      where: { empresa : {id:idEmpresa}},
+      where: { empresa: { id: idEmpresa } },
       relations: ["vendas"]
     });
   }
 
   async findOne(id: number): Promise<Pedido> {
     return await this.pedidoRepository.findOne({
-      where: {id: id}
+      where: { id: id }
     });
   }
 }

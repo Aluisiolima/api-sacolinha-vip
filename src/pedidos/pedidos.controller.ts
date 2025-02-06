@@ -4,7 +4,7 @@ import { CreatePedidoDto } from './dto/create-pedido.dto';
 
 @Controller('pedidos')
 export class PedidosController {
-  constructor(private readonly pedidosService: PedidosService) {}
+  constructor(private readonly pedidosService: PedidosService) { }
 
   @Post()
   create(@Body() createPedidoDto: CreatePedidoDto) {
@@ -12,7 +12,7 @@ export class PedidosController {
   }
 
   @Get("pegarAll/:id")
-  findAll(@Param('id') id:number) {
+  findAll(@Param('id') id: number) {
     return this.pedidosService.findAll(id);
   }
 

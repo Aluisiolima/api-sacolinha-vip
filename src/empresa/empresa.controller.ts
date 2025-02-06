@@ -5,11 +5,21 @@ import { UpdateEmpresaDto } from './dto/update-empresa.dto';
 
 @Controller('empresa')
 export class EmpresaController {
-  constructor(private readonly empresaService: EmpresaService) {}
+  constructor(private readonly empresaService: EmpresaService) { }
 
   @Post()
   create(@Body() createEmpresaDto: CreateEmpresaDto) {
     return this.empresaService.create(createEmpresaDto);
+  }
+
+  @Patch("dono")
+  inserirChefe(@Body() date: { empresa: number, user: number }) {
+    return this.empresaService.InserirProprietario(date);
+  }
+
+  @Patch("logo")
+  inserirLogo(@Body() date: { empresa: number, arquivo: number }) {
+    return this.empresaService.InserirImgLogo(date);
   }
 
   @Get()
