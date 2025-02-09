@@ -11,6 +11,5 @@ services:
         - "3000:3000"
       volumes:
         - ./uploads:/app/uploads
-        - ./dist:/app/dist
 
       restart: always

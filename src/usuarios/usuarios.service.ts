@@ -1,26 +1,59 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { Usuario } from './entities/usuario.entity';
+import { Repository } from 'typeorm';
+import * as bcrypt from "bcryptjs";
 
 @Injectable()
 export class UsuariosService {
-  create(createUsuarioDto: CreateUsuarioDto) {
-    return 'This action adds a new usuario';
+  constructor(
+    @InjectRepository(Usuario)
+    private usuarioRepository: Repository<Usuario>
+  ) { }
+
+  async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
+    createUsuarioDto.senha = await bcrypt.hash(createUsuarioDto.senha, 10);
+    return await this.usuarioRepository.save(createUsuarioDto);
   }
 
-  findAll() {
-    return `This action returns all usuarios`;
+  async findAll(empresaId: number): Promise<Usuario[]> {
+    return await this.usuarioRepository.find({
+      where: {
+        empresa: { id: empresaId }
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+  async findOne(id: number): Promise<Usuario> {
+    return await this.usuarioRepository.findOne({ where: { id: id } });
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
+  async update(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<void> {
+    const usuario = await this.usuarioRepository.findOne({
+      where: { id: id }
+    });
+
+    if (!usuario) {
+      throw new NotFoundException("Esse usuario nao existe!!");
+    }
+
+    if (updateUsuarioDto.senha) {
+      updateUsuarioDto.senha = await bcrypt.hash(updateUsuarioDto.senha, 10);
+    }
+
+    await this.usuarioRepository.update(id, updateUsuarioDto);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} usuario`;
+  async remove(id: number): Promise<void> {
+    const usuario = await this.usuarioRepository.findOne({
+      where: { id: id }
+    });
+
+    if (!usuario) {
+      throw new NotFoundException("Esse usuario nao existe!!");
+    }
+    await this.usuarioRepository.remove(usuario);
   }
 }
