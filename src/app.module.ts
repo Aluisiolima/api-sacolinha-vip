@@ -1,4 +1,5 @@
 import { Module } from "@nestjs/common";
+import { ConfigModule } from "@nestjs/config"
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { ProdutosModule } from "./produtos/produtos.module";
 import { EmpresaModule } from "./empresa/empresa.module";
@@ -16,19 +17,21 @@ import { Venda } from "./vendas/entities/venda.entity";
 import { Usuario } from "./usuarios/entities/usuario.entity";
 import { Tamanho } from "./tamanhos/entities/tamanho.entity";
 import { Pedido } from "./pedidos/entities/pedido.entity";
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     TypeOrmModule.forRoot({
-      type: "mysql",
-      host: String(process.env.HOST_DB),
-      port: Number(process.env.PORT_DB),
-      username: String(process.env.USER_DB),
-      password: String(process.env.SENHA_DB),
-      database: String(process.env.DB_NAME),
-      entities: [Arquivo,Categoria,Empresa,Pedido,Produto,Tamanho,Usuario,Venda],
+      type: process.env.DB,
+      host: process.env.HOST_DB,
+      port: process.env.PORT_DB,
+      username: process.env.USER_DB,
+      password: process.env.SENHA_DB,
+      database: process.env.DB_NAME,
+      entities: [Arquivo, Categoria, Empresa, Pedido, Produto, Tamanho, Usuario, Venda],
       synchronize: false,
-    }),
+    } as TypeOrmModule),
     ProdutosModule,
     EmpresaModule,
     PedidosModule,
@@ -36,8 +39,9 @@ import { Pedido } from "./pedidos/entities/pedido.entity";
     ArquivosModule,
     UsuariosModule,
     TamanhosModule,
-    CategoriasModule
+    CategoriasModule,
+    AuthModule
   ],
   providers: [],
 })
-export class AppModule {}
+export class AppModule { }

@@ -6,7 +6,7 @@ services:
         dockerfile: dockerfile
       image: sacolinha_api
       env_file:
-        - .env 
+        - .env.docker 
       ports:
         - "3000:3000"
       volumes:

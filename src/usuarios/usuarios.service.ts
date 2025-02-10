@@ -4,7 +4,7 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
-import * as bcrypt from "bcryptjs";
+import { hash } from "bcryptjs";
 
 @Injectable()
 export class UsuariosService {
@@ -14,7 +14,7 @@ export class UsuariosService {
   ) { }
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
-    createUsuarioDto.senha = await bcrypt.hash(createUsuarioDto.senha, 10);
+    createUsuarioDto.senha = await hash(createUsuarioDto.senha, 10);
     return await this.usuarioRepository.save(createUsuarioDto);
   }
 
@@ -40,7 +40,7 @@ export class UsuariosService {
     }
 
     if (updateUsuarioDto.senha) {
-      updateUsuarioDto.senha = await bcrypt.hash(updateUsuarioDto.senha, 10);
+      updateUsuarioDto.senha = await hash(updateUsuarioDto.senha, 10);
     }
 
     await this.usuarioRepository.update(id, updateUsuarioDto);
@@ -55,5 +55,19 @@ export class UsuariosService {
       throw new NotFoundException("Esse usuario nao existe!!");
     }
     await this.usuarioRepository.remove(usuario);
+  }
+
+  async search(name: string, cargo: string): Promise<Usuario> {
+    try{
+      return await this.usuarioRepository.findOneOrFail({
+        where: {
+          nome: name,
+          cargo: cargo
+        },
+        relations : [ "empresa" ]
+      })
+    }catch (error){
+      return null;
+    }
   }
 }
