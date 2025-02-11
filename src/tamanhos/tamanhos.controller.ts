@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Req } from "@nestjs/common";
 import { TamanhosService } from "./tamanhos.service";
 import { CreateTamanhoDto } from "./dto/create-tamanho.dto";
 import { AuthGuard } from "@nestjs/passport";
@@ -9,8 +9,8 @@ export class TamanhosController {
 
   @UseGuards(AuthGuard("jwt"))
   @Post("inserir")
-  create(@Body() createTamanhoDto: CreateTamanhoDto) {
-    return this.tamanhosService.create(createTamanhoDto);
+  create(@Body() createTamanhoDto: CreateTamanhoDto, @Req() req: any) {
+    return this.tamanhosService.create(createTamanhoDto, req.user);
   }
 
   @UseGuards(AuthGuard("jwt"))
@@ -21,7 +21,7 @@ export class TamanhosController {
 
   @UseGuards(AuthGuard("jwt"))
   @Delete("remove/:id")
-  remove(@Param("id") id: string) {
-    return this.tamanhosService.remove(+id);
+  remove(@Param("id") id: string, @Req() req: any) {
+    return this.tamanhosService.remove(+id, req.user);
   }
 }
