@@ -1,14 +1,16 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ArquivosService } from './arquivos.service';
 import { diskStorage } from 'multer';
 import { extname } from 'path';
 import { Empresa } from 'src/empresa/entities/empresa.entity';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('arquivos')
 export class ArquivosController {
   constructor(private readonly arquivosService: ArquivosService) {}
 
+  @UseGuards(AuthGuard("jwt"))
   @Post("insert/:idEmpresa")
   @UseInterceptors(
     FileInterceptor('file', {
@@ -32,11 +34,13 @@ export class ArquivosController {
     return this.arquivosService.create(arquivo)
   }
 
+  @UseGuards(AuthGuard("jwt"))
   @Get(":idEmpresa")
   findAll(@Param("idEmpresa") idEmpresa:number) {
     return this.arquivosService.findAll(+idEmpresa);
   }
 
+  @UseGuards(AuthGuard("jwt"))
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.arquivosService.remove(+id);
