@@ -31,6 +31,15 @@ export class ProdutosService {
     });
   }
 
+  async findAllName(id_empresa: number) {
+    return await this.produtoRepository.find({
+      where:{
+        empresa : {id : id_empresa}
+      },
+      select: ["nome","id"]
+    });
+  }
+
   async inserirImg(ProdutoId:number, ImgId:number): Promise<Produto> {
     const produto = await this.produtoRepository.findOne({
       where: { id : ProdutoId },

@@ -32,6 +32,11 @@ export class ProdutosController {
     return this.produtosService.findAll(+id);
   }
 
+  @Get("pegarAll/:idEmpresa/name")
+  findAllName(@Param("idEmpresa") id: string) {
+    return this.produtosService.findAllName(+id);
+  }
+
   @Get("pegar/:id")
   findOne(@Param("id") id: string) {
     return this.produtosService.findOne(+id);
