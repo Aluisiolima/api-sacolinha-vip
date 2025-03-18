@@ -7,7 +7,7 @@ import { Arquivo } from 'src/arquivos/entities/arquivo.entity';
 import { Tamanho } from 'src/tamanhos/entities/tamanho.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Produto,Arquivo,Tamanho])],
+  imports: [TypeOrmModule.forFeature([Produto, Arquivo, Tamanho])],
   controllers: [ProdutosController],
   providers: [ProdutosService],
 })

@@ -1,4 +1,8 @@
-import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateEmpresaDto } from './dto/create-empresa.dto';
 import { UpdateEmpresaDto } from './dto/update-empresa.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -15,28 +19,31 @@ export class EmpresaService {
     @InjectRepository(Usuario)
     private usuarioRepository: Repository<Usuario>,
     @InjectRepository(Arquivo)
-    private arquivoRepository: Repository<Arquivo>
-  ) { }
+    private arquivoRepository: Repository<Arquivo>,
+  ) {}
 
   async create(createEmpresaDto: CreateEmpresaDto): Promise<Empresa> {
     return await this.empresaRepository.save(createEmpresaDto);
   }
 
-  async InserirProprietario(date: { empresa: number, user: number }): Promise<Empresa> {
+  async InserirProprietario(date: {
+    empresa: number;
+    user: number;
+  }): Promise<Empresa> {
     const empresa = await this.empresaRepository.findOne({
-      where: { id: date.empresa }
+      where: { id: date.empresa },
     });
 
     if (!empresa) {
-      throw new NotFoundException("Nao existe esse empresa!!!");
+      throw new NotFoundException('Nao existe esse empresa!!!');
     }
 
     const usuario = await this.usuarioRepository.findOne({
-      where: { id: date.user }
+      where: { id: date.user },
     });
 
     if (!usuario) {
-      throw new NotFoundException("Esse usuario nao exite!!")
+      throw new NotFoundException('Esse usuario nao exite!!');
     }
 
     empresa.usuario = usuario;
@@ -44,25 +51,28 @@ export class EmpresaService {
     return await this.empresaRepository.save(empresa);
   }
 
-  async InserirImgLogo(date: { empresa: number, arquivo: number }): Promise<Empresa> {
+  async InserirImgLogo(date: {
+    empresa: number;
+    arquivo: number;
+  }): Promise<Empresa> {
     const empresa = await this.empresaRepository.findOne({
-      where: { id: date.empresa }
+      where: { id: date.empresa },
     });
 
     if (!empresa) {
-      throw new NotFoundException("Nao existe esse empresa!!!");
+      throw new NotFoundException('Nao existe esse empresa!!!');
     }
 
     const arquivo = await this.arquivoRepository.findOne({
-      where: { id: date.arquivo }
+      where: { id: date.arquivo },
     });
 
     if (!arquivo) {
-      throw new NotFoundException("Essa Img nao exite!!")
+      throw new NotFoundException('Essa Img nao exite!!');
     }
 
-    if (!arquivo.tipo.includes("image")) {
-      throw new BadRequestException("Essa Img nao esta no formato correto!!")
+    if (!arquivo.tipo.includes('image')) {
+      throw new BadRequestException('Essa Img nao esta no formato correto!!');
     }
 
     empresa.arquivo = arquivo;
@@ -72,24 +82,24 @@ export class EmpresaService {
 
   async findAll(): Promise<Empresa[]> {
     return await this.empresaRepository.find({
-      relations: ["arquivo"]
+      relations: ['arquivo'],
     });
   }
 
   async findOne(id: number): Promise<Empresa> {
     return await this.empresaRepository.findOne({
       where: { id: id },
-      relations: ["arquivo"]
+      relations: ['arquivo'],
     });
   }
 
   async update(id: number, updateEmpresaDto: UpdateEmpresaDto): Promise<void> {
     const empresa = await this.empresaRepository.findOne({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!empresa) {
-      throw new NotFoundException("Essa empresa nao existe!!");
+      throw new NotFoundException('Essa empresa nao existe!!');
     }
 
     await this.empresaRepository.update(id, updateEmpresaDto);
@@ -97,11 +107,11 @@ export class EmpresaService {
 
   async remove(id: number): Promise<void> {
     const empresa = await this.empresaRepository.findOne({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!empresa) {
-      throw new NotFoundException("Essa empresa nao existe!!");
+      throw new NotFoundException('Essa empresa nao existe!!');
     }
 
     await this.empresaRepository.remove(empresa);

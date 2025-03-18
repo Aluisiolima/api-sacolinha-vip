@@ -4,14 +4,15 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
-import { hash } from "bcryptjs";
+import { hash } from 'bcryptjs';
+import { console } from 'node:inspector';
 
 @Injectable()
 export class UsuariosService {
   constructor(
     @InjectRepository(Usuario)
-    private usuarioRepository: Repository<Usuario>
-  ) { }
+    private usuarioRepository: Repository<Usuario>,
+  ) {}
 
   async create(createUsuarioDto: CreateUsuarioDto): Promise<Usuario> {
     createUsuarioDto.senha = await hash(createUsuarioDto.senha, 10);
@@ -21,8 +22,8 @@ export class UsuariosService {
   async findAll(empresaId: number): Promise<Usuario[]> {
     return await this.usuarioRepository.find({
       where: {
-        empresa: { id: empresaId }
-      }
+        empresa: { id: empresaId },
+      },
     });
   }
 
@@ -32,11 +33,11 @@ export class UsuariosService {
 
   async update(id: number, updateUsuarioDto: UpdateUsuarioDto): Promise<void> {
     const usuario = await this.usuarioRepository.findOne({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!usuario) {
-      throw new NotFoundException("Esse usuario nao existe!!");
+      throw new NotFoundException('Esse usuario nao existe!!');
     }
 
     if (updateUsuarioDto.senha) {
@@ -48,25 +49,26 @@ export class UsuariosService {
 
   async remove(id: number): Promise<void> {
     const usuario = await this.usuarioRepository.findOne({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!usuario) {
-      throw new NotFoundException("Esse usuario nao existe!!");
+      throw new NotFoundException('Esse usuario nao existe!!');
     }
     await this.usuarioRepository.remove(usuario);
   }
 
   async search(name: string, cargo: string): Promise<Usuario> {
-    try{
+    try {
       return await this.usuarioRepository.findOneOrFail({
         where: {
           nome: name,
-          cargo: cargo
+          cargo: cargo,
         },
-        relations : [ "empresa" ]
-      })
-    }catch (error){
+        relations: ['empresa'],
+      });
+    } catch (error) {
+      console.log(error);
       return null;
     }
   }

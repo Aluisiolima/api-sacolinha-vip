@@ -8,19 +8,18 @@ import { Repository } from 'typeorm';
 export class VendasService {
   constructor(
     @InjectRepository(Venda)
-    private vendaRepository: Repository<Venda>
-  ){}
+    private vendaRepository: Repository<Venda>,
+  ) {}
 
-  async create(createVendaDto: CreateVendaDto): Promise<Venda>{
+  async create(createVendaDto: CreateVendaDto): Promise<Venda> {
     return await this.vendaRepository.save(createVendaDto);
   }
 
-  async findAll(idEmpresa:number): Promise<Venda[]> {
+  async findAll(idEmpresa: number): Promise<Venda[]> {
     return await this.vendaRepository.find({
       where: {
-        empresa: { id : idEmpresa }
-      }
+        empresa: { id: idEmpresa },
+      },
     });
   }
-
 }

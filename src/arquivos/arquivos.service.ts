@@ -6,13 +6,12 @@ import { Arquivo } from './entities/arquivo.entity';
 import * as path from 'path';
 import * as fs from 'fs';
 
-
 @Injectable()
 export class ArquivosService {
   constructor(
     @InjectRepository(Arquivo)
-    private arquivoRepository: Repository<Arquivo>
-  ) { }
+    private arquivoRepository: Repository<Arquivo>,
+  ) {}
 
   async create(createArquivoDto: CreateArquivoDto): Promise<Arquivo> {
     return await this.arquivoRepository.save(createArquivoDto);
@@ -20,17 +19,17 @@ export class ArquivosService {
 
   async findAll(idEmpresa: number): Promise<Arquivo[]> {
     return await this.arquivoRepository.find({
-      where: { empresa: { id: idEmpresa } }
+      where: { empresa: { id: idEmpresa } },
     });
   }
 
   async remove(id: number): Promise<void> {
     const arquivo = await this.arquivoRepository.findOne({
-      where: { id: id }
+      where: { id: id },
     });
 
     if (!arquivo) {
-      throw new NotFoundException("Esse arquivo nao existe!!");
+      throw new NotFoundException('Esse arquivo nao existe!!');
     }
     await this.arquivoRepository.remove(arquivo);
     return new Promise((resolve, reject) => {

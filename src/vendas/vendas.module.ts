@@ -7,6 +7,6 @@ import { Venda } from './entities/venda.entity';
 @Module({
   imports: [TypeOrmModule.forFeature([Venda])],
   controllers: [VendasController],
-  providers: [VendasService]
+  providers: [VendasService],
 })
 export class VendasModule {}

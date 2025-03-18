@@ -6,9 +6,9 @@ import { AuthGuard } from '@nestjs/passport';
 export class VendasController {
   constructor(private readonly vendasService: VendasService) {}
 
-  @UseGuards(AuthGuard("jwt"))
-  @Get(":id")
-  findAll(@Param("id") id:number) {
+  @UseGuards(AuthGuard('jwt'))
+  @Get(':id')
+  findAll(@Param('id') id: number) {
     return this.vendasService.findAll(id);
   }
 }

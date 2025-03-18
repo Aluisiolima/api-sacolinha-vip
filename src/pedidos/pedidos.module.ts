@@ -3,7 +3,6 @@ import { PedidosService } from './pedidos.service';
 import { PedidosController } from './pedidos.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Pedido } from './entities/pedido.entity';
-import { VendasModule } from 'src/vendas/vendas.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Pedido])],

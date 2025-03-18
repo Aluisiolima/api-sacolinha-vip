@@ -7,7 +7,7 @@ import { Arquivo } from 'src/arquivos/entities/arquivo.entity';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 @Module({
-  imports:[TypeOrmModule.forFeature([Empresa,Arquivo,Usuario])],
+  imports: [TypeOrmModule.forFeature([Empresa, Arquivo, Usuario])],
   controllers: [EmpresaController],
   providers: [EmpresaService],
 })

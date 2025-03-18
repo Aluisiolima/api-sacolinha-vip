@@ -3,7 +3,6 @@ import { CategoriasService } from './categorias.service';
 import { CategoriasController } from './categorias.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Categoria } from './entities/categoria.entity';
-import { Produto } from 'src/produtos/entities/produto.entity';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Categoria])],

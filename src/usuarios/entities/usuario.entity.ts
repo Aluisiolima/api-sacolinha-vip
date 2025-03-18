@@ -1,21 +1,30 @@
-import { Empresa } from "src/empresa/entities/empresa.entity"
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Empresa } from 'src/empresa/entities/empresa.entity';
+import {
+  Column,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
-@Entity("usuarios")
+@Entity('usuarios')
 export class Usuario {
-    @PrimaryGeneratedColumn()
-    id: number
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column({ type: "varchar", length: 100, nullable: false })
-    nome: string
+  @Column({ type: 'varchar', length: 100, nullable: false })
+  nome: string;
 
-    @Column({ type: "varchar", length: 200, nullable: false })
-    senha: string
+  @Column({ type: 'varchar', length: 200, nullable: false })
+  senha: string;
 
-    @Column({ type: "varchar", length: 20, nullable: false })
-    cargo: string
+  @Column({ type: 'varchar', length: 20, nullable: false })
+  cargo: string;
 
-    @ManyToOne(() => Empresa, (empresa) => empresa.usuarios, { onDelete: "CASCADE", nullable: false })
-    @JoinColumn({ name: "id_empresa" })
-    empresa: Empresa
+  @ManyToOne(() => Empresa, (empresa) => empresa.usuarios, {
+    onDelete: 'CASCADE',
+    nullable: false,
+  })
+  @JoinColumn({ name: 'id_empresa' })
+  empresa: Empresa;
 }
