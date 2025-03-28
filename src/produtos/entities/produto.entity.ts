@@ -8,8 +8,8 @@ import {
   JoinTable,
   ManyToMany,
 } from 'typeorm';
-import { Arquivo } from 'src/arquivos/entities/arquivo.entity';
 import { Empresa } from 'src/empresa/entities/empresa.entity';
+import { Arquivo } from 'src/arquivos/entities/arquivo.entity';
 import { Tamanho } from 'src/tamanhos/entities/tamanho.entity';
 import { Categoria } from 'src/categorias/entities/categoria.entity';
 import { Venda } from 'src/vendas/entities/venda.entity';
@@ -68,4 +68,17 @@ export class Produto {
     nullable: false,
   })
   vendas: Venda[];
+
+  constructor(Produto?: Partial<Produto>){
+    this.arquivos = Produto?.arquivos;
+    this.categoria = Produto?.categoria;
+    this.desconto = Produto?.desconto;
+    this.empresa = Produto?.empresa;
+    this.estoque = Produto?.estoque;
+    this.id = Produto?.id;
+    this.nome = Produto?.nome;
+    this.tamanhos = Produto?.tamanhos;
+    this.valor = Produto?.valor;
+    this.valor = Produto?.valor;
+  }
 }

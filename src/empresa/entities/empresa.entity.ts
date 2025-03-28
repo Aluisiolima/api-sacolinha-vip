@@ -72,4 +72,21 @@ export class Empresa {
     nullable: false,
   })
   vendas: Venda[];
+
+  constructor(Empresa?: Partial<Empresa>) {
+    this.id = Empresa?.id;
+    this.nome = Empresa?.nome;
+    this.endereco = Empresa?.endereco;
+    this.arquivo = Empresa?.arquivo;
+    this.arquivos = Empresa?.arquivos;
+    this.facebook = Empresa?.facebook;
+    this.instagram = Empresa?.instagram;
+    this.pedidos = Empresa?.pedidos;
+    this.produtos = Empresa?.produtos;
+    this.status = Empresa?.status;
+    this.usuario = Empresa?.usuario;
+    this.usuarios = Empresa?.usuarios;
+    this.vendas = Empresa?.vendas;
+    this.whatsapp = Empresa?.whatsapp;
+  }
 }

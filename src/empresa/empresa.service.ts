@@ -89,7 +89,7 @@ export class EmpresaService {
   async findOne(id: number): Promise<Empresa> {
     return await this.empresaRepository.findOne({
       where: { id: id },
-      relations: ['arquivo'],
+      relations: ['arquivos', 'produtos'],
     });
   }
 
