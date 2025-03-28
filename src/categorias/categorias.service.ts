@@ -27,9 +27,12 @@ export class CategoriasService {
     );
   }
 
-  async findAll(): Promise<Categoria[]> {
+  async findAll(id:number): Promise<Categoria[]> {
     return await this.categoriaRepository.find({
-      relations: ['produtos'],
+      relations: {
+        produtos:true
+      },
+      where: { produtos : { empresa : { id : id }}}
     });
   }
 

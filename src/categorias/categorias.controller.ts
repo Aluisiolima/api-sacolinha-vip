@@ -22,9 +22,9 @@ export class CategoriasController {
     return this.categoriasService.create(createCategoriaDto, req.user);
   }
 
-  @Get('pegar')
-  findAll() {
-    return this.categoriasService.findAll();
+  @Get('pegar/:id')
+  findAll(@Param('id') id:string) {
+    return this.categoriasService.findAll(+id);
   }
 
   @UseGuards(AuthGuard('jwt'))

@@ -41,12 +41,12 @@ export class ProdutosController {
     return this.produtosService.inserirTamanho(idProduto, idTamanho);
   }
 
-  @Get('pegarAll/:idEmpresa')
+  @Get(':idEmpresa')
   findAll(@Param('idEmpresa') id: string) {
     return this.produtosService.findAll(+id);
   }
 
-  @Get('pegarAll/:idEmpresa/name')
+  @Get(':idEmpresa/name')
   findAllName(@Param('idEmpresa') id: string) {
     return this.produtosService.findAllName(+id);
   }

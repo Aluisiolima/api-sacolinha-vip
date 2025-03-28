@@ -89,9 +89,20 @@ export class EmpresaService {
   async findOne(id: number): Promise<Empresa> {
     return await this.empresaRepository.findOne({
       where: { id: id },
-      relations: ['arquivos', 'produtos'],
+      relations: ['produtos'],
     });
   }
+
+  async findOneName(id: number): Promise<Empresa> {
+    return await this.empresaRepository.findOne({
+      where: { id: id },
+      select: {
+        id:true,
+        nome:true
+      }
+    });
+  }
+  
 
   async update(id: number, updateEmpresaDto: UpdateEmpresaDto): Promise<void> {
     const empresa = await this.empresaRepository.findOne({

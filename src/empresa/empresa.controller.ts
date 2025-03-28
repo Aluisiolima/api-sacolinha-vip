@@ -41,9 +41,15 @@ export class EmpresaController {
     return this.empresaService.findAll();
   }
 
+  @UseGuards(AuthGuard('jwt'))
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.empresaService.findOne(+id);
+  }
+
+  @Get(':id/name')
+  findOneName(@Param('id') id: string) {
+    return this.empresaService.findOneName(+id);
   }
 
   @UseGuards(AuthGuard('jwt'))

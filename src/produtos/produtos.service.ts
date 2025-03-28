@@ -31,7 +31,12 @@ export class ProdutosService {
       where: {
         empresa: { id: id_empresa },
       },
-      relations: ['arquivos', 'tamanhos', 'categoria'],
+      relations: {
+        arquivos:true,
+        tamanhos:true,
+        categoria:true,
+      },
+      order: { categoria: {id: "ASC"}}
     });
   }
 
@@ -40,7 +45,11 @@ export class ProdutosService {
       where: {
         empresa: { id: id_empresa },
       },
-      select: ['nome', 'id'],
+      select: {
+        id:true,
+        nome:true,
+      },
+      order: { nome: 'ASC'}
     });
   }
 
