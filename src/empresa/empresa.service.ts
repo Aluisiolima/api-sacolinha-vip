@@ -98,7 +98,11 @@ export class EmpresaService {
       where: { id: id },
       select: {
         id:true,
-        nome:true
+        nome:true,
+        facebook:true,
+        instagram:true,
+        status:true,
+        whatsapp:true
       }
     });
   }

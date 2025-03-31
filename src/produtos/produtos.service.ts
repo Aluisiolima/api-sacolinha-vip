@@ -33,8 +33,6 @@ export class ProdutosService {
       },
       relations: {
         arquivos:true,
-        tamanhos:true,
-        categoria:true,
       },
       order: { categoria: {id: "ASC"}}
     });

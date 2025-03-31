@@ -30,9 +30,10 @@ export class CategoriasService {
   async findAll(id:number): Promise<Categoria[]> {
     return await this.categoriaRepository.find({
       relations: {
-        produtos:true
+        produtos: {arquivos:true}
       },
-      where: { produtos : { empresa : { id : id }}}
+      where: { produtos : { empresa : { id : id }}},
+      order: { categoria : 'ASC' }
     });
   }
 
